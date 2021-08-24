@@ -7,27 +7,25 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace dotnet_weather_cli.Providers
+namespace dotnet_auth_cli.Identity
 {
-    public class IdentityDemoProvider
+    public class IdentityTestHttpClient
     {
-        private HttpClient _httpClient;
+        private readonly HttpClient _httpClient;
 
-        public IdentityDemoProvider(HttpClient httpClient) {
+        public IdentityTestHttpClient(HttpClient httpClient) {
             _httpClient = httpClient;
         }
 
-        public void GetTestData()
+        public string GetTestData()
         {
             var testResult = _httpClient.GetAsync("https://demo.identityserver.io/api/test").GetAwaiter().GetResult();
-
-            Console.WriteLine("Test Result");
-
             var res = testResult.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
             Console.WriteLine("STATUS = " + testResult.StatusCode.ToString());
             Console.WriteLine("RESPONSE = " + res);
 
-            Console.ReadLine();
+            return res;
         }
     }
 }

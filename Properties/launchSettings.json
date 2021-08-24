@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "dotnet-weather-cli": {
+      "commandName": "Project",
+      "commandLineArgs": "--environment Development"
+    }
+  }
+}

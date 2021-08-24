@@ -6,36 +6,35 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using dotnet_weather_cli.Providers;
 
-namespace dotnet_weather_cli
+using Microsoft.Extensions.Configuration;
+using System.IO;
+using Microsoft.Extensions.Options;
+using dotnet_auth_cli.Identity;
+
+namespace dotnet_auth_cli
 {
     class Program
     {
-
         static IHostBuilder CreateHostBuilder(string[] args) =>
                 Host.CreateDefaultBuilder(args)
-                    .ConfigureServices((_, services) =>
+                    .ConfigureAppConfiguration((hostingContext, configuration) => {
+                        // See docs for configuration info
+                        // https://docs.microsoft.com/en-us/dotnet/core/extensions/configuration-providers#file-configuration-provider
+                        IHostEnvironment env = hostingContext.HostingEnvironment;
+
+                        configuration
+                            .SetBasePath(Directory.GetParent(AppContext.BaseDirectory).FullName)
+                            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                            .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true, true);
+                    })
+                    .ConfigureServices((hostCtx, services) =>
                     {
-                        services.AddSingleton<IdentityDemoProvider>();
-                        services.AddHttpClient<IdentityDemoProvider>(_httpClient => {
-                            var tokenResponse = _httpClient.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest()
-                            {
-                                Address = "https://demo.identityserver.io/connect/token",
+                        var optionsConfig = hostCtx.Configuration.GetSection("WeatherCLIOptions");
+                        services.Configure<DotNetAuthCLIOptions>(optionsConfig);
 
-                                ClientId = "m2m",
-                                ClientSecret = "secret",
-                                Scope = "api"
-                            });
-
-                            var result = tokenResponse.GetAwaiter().GetResult();
-
-                            Console.WriteLine("Token");
-                            Console.WriteLine(JsonSerializer.Serialize(result));
-
-
-                            _httpClient.SetBearerToken(result.AccessToken);
-                        });
+                        services.AddSingleton<IdentityRepository>();
+                        services.AddHttpClientWithBearer<IdentityTestHttpClient>();
                     });
                         
 
@@ -43,14 +42,25 @@ namespace dotnet_weather_cli
         {
             using IHost host = CreateHostBuilder(args).Build();
 
-            Console.WriteLine("Hello World!");
+            bool redo = true;
+            while (redo) {
+                RunTest(host);
 
-            var http = new HttpClient();
+                Console.WriteLine("");
+                Console.WriteLine("Do it again? y/n");
+                string yn = Console.ReadLine();
+                redo = yn.ToLower() == "y";
+            }
+        }
 
-            var idDemoProvider = host.Services.GetService<IdentityDemoProvider>();
+        private static void RunTest(IHost host)
+        {
+            var idDemoProvider = host.Services.GetService<IdentityTestHttpClient>();
 
-            idDemoProvider.GetTestData();
-       
+            var testResult = idDemoProvider.GetTestData();
+
+            Console.WriteLine("API Test Result:");
+            Console.WriteLine(testResult);
         }
     }
 }
