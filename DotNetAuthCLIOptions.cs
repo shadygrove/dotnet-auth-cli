@@ -9,5 +9,7 @@ namespace dotnet_auth_cli
     public class DotNetAuthCLIOptions
     {
         public string IdentityServerUri { get; set; }
+
+        public string TestApiEndpoint { get; set; }
     }
 }

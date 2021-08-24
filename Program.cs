@@ -30,7 +30,7 @@ namespace dotnet_auth_cli
                     })
                     .ConfigureServices((hostCtx, services) =>
                     {
-                        var optionsConfig = hostCtx.Configuration.GetSection("WeatherCLIOptions");
+                        var optionsConfig = hostCtx.Configuration.GetSection(nameof(DotNetAuthCLIOptions));
                         services.Configure<DotNetAuthCLIOptions>(optionsConfig);
 
                         services.AddSingleton<IdentityRepository>();

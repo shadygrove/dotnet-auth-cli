@@ -1,4 +1,5 @@
 ﻿using IdentityModel.Client;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,14 +13,16 @@ namespace dotnet_auth_cli.Identity
     public class IdentityTestHttpClient
     {
         private readonly HttpClient _httpClient;
+        private readonly IOptions<DotNetAuthCLIOptions> _options;
 
-        public IdentityTestHttpClient(HttpClient httpClient) {
+        public IdentityTestHttpClient(HttpClient httpClient, IOptions<DotNetAuthCLIOptions> options) {
             _httpClient = httpClient;
+            _options = options;
         }
 
         public string GetTestData()
         {
-            var testResult = _httpClient.GetAsync("https://demo.identityserver.io/api/test").GetAwaiter().GetResult();
+            var testResult = _httpClient.GetAsync(_options.Value.TestApiEndpoint).GetAwaiter().GetResult();
             var res = testResult.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
             Console.WriteLine("STATUS = " + testResult.StatusCode.ToString());
