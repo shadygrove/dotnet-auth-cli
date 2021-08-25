@@ -7,6 +7,8 @@ For simplicity this project requests tokens from the IdentityServer demo applica
 To make a secured web call, the application uses the test API provided on the Identity Server demo:  
 https://demo.identityserver.io/api/test
 
+Here is a good summary of [application authentication flows](https://docs.microsoft.com/en-us/azure/active-directory/develop/authentication-flows-app-scenarios) (targets Azure Active Directory but same concepts).
+
 ##### Resources Used in Building This App
 
 [.NET Dependency Injection for Console Apps](https://docs.microsoft.com/en-us/dotnet/core/extensions/dependency-injection-usage)  
