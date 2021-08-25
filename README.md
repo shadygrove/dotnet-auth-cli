@@ -4,6 +4,9 @@ This project shows an example of how to use the Client Credentials authenticatio
 
 For simplicity this project requests tokens from the IdentityServer demo application at [https://demo.identityserver.io](https://demo.identityserver.io)  
 
+To make a secured web call, the application uses the test API provided on the Identity Server demo:  
+https://demo.identityserver.io/api/test
+
 ### About Confidential Grants
 
 Some applications, such as "daemon" or background processing. 
@@ -20,6 +23,12 @@ It is assumed that the Identity Platform is setup to support OAuth 2.0 Open ID C
 
 Example of a [daemon application using MSAL.NET](https://docs.microsoft.com/en-us/samples/azure-samples/active-directory-dotnetcore-daemon-v2/ms-identity-daemon/)
 
+Other Microsoft Resources:  
+- [Identity Extensions for .NET](https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet) (Azure Active Directory)
+
+### Third-party Provider Support
+
+There is some direct support for [third-party auth providers](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/social/other-logins?view=aspnetcore-3.1) via Nuget packages, but I don't see any specific to Keycloak.
 
 ## Code Explanation
 
