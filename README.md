@@ -7,6 +7,13 @@ For simplicity this project requests tokens from the IdentityServer demo applica
 To make a secured web call, the application uses the test API provided on the Identity Server demo:  
 https://demo.identityserver.io/api/test
 
+##### Resources Used in Building This App
+
+[.NET Dependency Injection for Console Apps](https://docs.microsoft.com/en-us/dotnet/core/extensions/dependency-injection-usage)  
+[.NET Custom HttpClients](https://docs.microsoft.com/en-us/dotnet/architecture/microservices/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests)  
+[.NET Http Interceptors](https://stackoverflow.com/questions/63260187/httpinterceptor-implementation-in-c-sharp-and-net)  
+[.NET Http Requests](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/http-requests?view=aspnetcore-5.0#generated-clients) (interesting item on using [Polly](https://github.com/App-vNext/Polly) for fault tolerance and resiliency)  
+
 ### About Confidential Grants
 
 Some applications, such as "daemon" or background processing. 
