@@ -11,6 +11,7 @@ Here is a good summary of [application authentication flows](https://docs.micros
 
 ##### Resources Used in Building This App
 
+[.NET Configuration Extenstions](https://docs.microsoft.com/en-us/dotnet/core/extensions/configuration)  
 [.NET Dependency Injection for Console Apps](https://docs.microsoft.com/en-us/dotnet/core/extensions/dependency-injection-usage)  
 [.NET Custom HttpClients](https://docs.microsoft.com/en-us/dotnet/architecture/microservices/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests)  
 [.NET Http Interceptors](https://stackoverflow.com/questions/63260187/httpinterceptor-implementation-in-c-sharp-and-net)  
